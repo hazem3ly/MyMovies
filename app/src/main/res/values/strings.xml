@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyMovie</string>
+    <string name="popular">POPULAR</string>
+    <string name="top_rated">TOP RATED</string>
+    <string name="favourite">FAVOURITE</string>
+    <string name="videos">Videos</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">Sorry No Reviews Available For This Movie</string>
+    <string name="no_trailers">Sorry No Trailers Available For This Movie</string>
+    <string name="over_ten">\"/10\"</string>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    card_view:cardCornerRadius="7dp"
+    card_view:cardElevation="7dp"
+    card_view:cardMaxElevation="7dp">
+
+    <ImageView
+        android:id="@+id/movie_poster"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:scaleType="fitXY"
+        tools:src="@drawable/loading" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#99000000"
+        android:contentDescription="@string/app_name"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        tools:text="test" />
+
+</android.support.v7.widget.CardView>
+
+
