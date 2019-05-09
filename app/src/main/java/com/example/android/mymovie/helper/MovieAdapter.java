@@ -88,7 +88,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         void bindData(Movie movie) {
             movie_title.setText(movie.title);
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(IMAGE_DOWNLOAD_URL + IMAGE_SIZE + movie.posterPath)
                     .placeholder(R.drawable.loading)
                     .error(R.drawable.error)

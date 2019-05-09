@@ -21,6 +21,9 @@ import com.example.android.mymovie.helper.MovieAdapter;
 import com.example.android.mymovie.helper.MoviesApi;
 import com.example.android.mymovie.helper.PageChangeListener;
 import com.example.android.mymovie.network.RestClient;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 
@@ -59,19 +62,7 @@ public class MainFragment extends Fragment implements MovieAdapter.ItemClickList
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             Bundle data = getArguments();
-            int position = data.getInt(POSITION, -1);
-            switch (position) {
-                case 0:
-                    viewPagerPagePosition = position;
-                    break;
-                case 1:
-                    viewPagerPagePosition = position;
-                    break;
-                case 2:
-                    viewPagerPagePosition = position;
-                    break;
-                default:
-            }
+            viewPagerPagePosition = data.getInt(POSITION, 0);
         }
 
     }
@@ -193,6 +184,14 @@ public class MainFragment extends Fragment implements MovieAdapter.ItemClickList
 
                 @Override
                 protected void onPostExecute(ArrayList<Movie> result) {
+
+                    if (result == null || result.size() == 0) {
+                        info_text.setVisibility(View.VISIBLE);
+                        movies_recycle_view.setVisibility(View.GONE);
+                        info_text.setText("No Favorite Movies Saved");
+                        return;
+                    }
+
                     info_text.setVisibility(View.GONE);
                     movies_recycle_view.setVisibility(View.VISIBLE);
                     moviesList = result;

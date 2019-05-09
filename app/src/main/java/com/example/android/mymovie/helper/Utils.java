@@ -18,7 +18,7 @@ public class Utils {
 
 
 
-    public static final String IMAGE_DOWNLOAD_URL = "http://image.tmdb.org/t/p/";
+    public static final String IMAGE_DOWNLOAD_URL = "https://image.tmdb.org/t/p/";
     public static final String IMAGE_SIZE = "w185";
     public static final String MOVIES_LIST_INSTANCE_KEY = "movies_list_key";
     public static final String RECYCLER_POSITION = "recycler_states";

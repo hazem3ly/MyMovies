@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,13 +94,13 @@ public class DetailsFragment extends Fragment {
 
     private void updateData() {
 
-        Picasso.with(getContext())
+        Picasso.get()
                 .load(IMAGE_DOWNLOAD_URL + "w500" + selectedMovie.backdropPath)
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.error)
                 .into(app_bar_image);
 
-        Picasso.with(getContext())
+        Picasso.get()
                 .load(IMAGE_DOWNLOAD_URL + IMAGE_SIZE + selectedMovie.posterPath)
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.error)
@@ -133,9 +134,9 @@ public class DetailsFragment extends Fragment {
             protected void onPostExecute(Boolean result) {
                 isFav = result;
                 if (result)
-                    ((FloatingActionButton) rootView.findViewById(R.id.fav_fab)).setImageResource(R.drawable.ic_action_favorite);
+                    ((FloatingActionButton) rootView.findViewById(R.id.fav_fab)).setImageResource(R.drawable.ic_favorite);
                 else
-                    ((FloatingActionButton) rootView.findViewById(R.id.fav_fab)).setImageResource(R.drawable.ic_action_favorite_border);
+                    ((FloatingActionButton) rootView.findViewById(R.id.fav_fab)).setImageResource(R.drawable.ic_favorite_border);
             }
         }.execute();
 
@@ -169,7 +170,7 @@ public class DetailsFragment extends Fragment {
                     final MovieVideos moviesApi = response.body();
                     if (moviesApi != null && moviesApi.results != null && moviesApi.results.size() >= 0) {
 
-                        if (getContext() != null)   fillVideosList(moviesApi.results);
+                        if (getContext() != null) fillVideosList(moviesApi.results);
                     }
                 }
             }
@@ -226,8 +227,22 @@ public class DetailsFragment extends Fragment {
             ((LinearLayout) rootView.findViewById(R.id.videos_list)).addView(textView);
         }
         for (final MovieVideos.Videos videos : results) {
-            Button button = new Button(getContext());
-            button.setText(videos.name);
+            ImageView button = new ImageView(getContext());
+//            View view = new View(getContext());
+//            RelativeLayout.LayoutParams v = new RelativeLayout.LayoutParams(10, ViewGroup.LayoutParams.MATCH_PARENT);
+//            view.setLayoutParams(v);
+//            button.setText(videos.name);
+//            https://img.youtube.com/vi/D42_74mOPYk/default.jpg
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//            layoutParams.rightMargin = 30;
+            button.setLayoutParams(layoutParams);
+            Picasso.get()
+                    .load("https://img.youtube.com/vi/" + videos.key + "/default.jpg")
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .resize(850,500)
+                    .into(button);
+
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -236,6 +251,7 @@ public class DetailsFragment extends Fragment {
                 }
             });
             ((LinearLayout) rootView.findViewById(R.id.videos_list)).addView(button);
+//            ((LinearLayout) rootView.findViewById(R.id.videos_list)).addView(view);
         }
     }
 
@@ -251,8 +267,10 @@ public class DetailsFragment extends Fragment {
 
         Uri uri = getActivity().getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, cv);
         if (uri != null) {
-            Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
-            ((FloatingActionButton) rootView.findViewById(R.id.fav_fab)).setImageResource(R.drawable.ic_action_favorite);
+            Toast.makeText(getContext(), "Added To Favourite", Toast.LENGTH_SHORT).show();
+            ((FloatingActionButton) rootView.findViewById(R.id.fav_fab)).setImageResource(R.drawable.ic_favorite);
+            isFav = true;
+
         }
 
     }
@@ -262,8 +280,8 @@ public class DetailsFragment extends Fragment {
         int itemDeleted = getActivity().getContentResolver().delete(uri, null, null);
         if (itemDeleted > 0) {
             Toast.makeText(getContext(), "Removed From Favourite", Toast.LENGTH_SHORT).show();
-            ((FloatingActionButton) rootView.findViewById(R.id.fav_fab)).setImageResource(R.drawable.ic_action_favorite_border);
-
+            ((FloatingActionButton) rootView.findViewById(R.id.fav_fab)).setImageResource(R.drawable.ic_favorite_border);
+            isFav = false;
         }
 
     }

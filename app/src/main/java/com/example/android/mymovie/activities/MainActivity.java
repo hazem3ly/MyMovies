@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +16,10 @@ import com.example.android.mymovie.fragments.DetailsFragment;
 import com.example.android.mymovie.helper.Movie;
 import com.example.android.mymovie.helper.OnMovieSelectListener;
 import com.example.android.mymovie.helper.ViewPagerAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import static com.example.android.mymovie.fragments.MainFragment.pageChangeListener;
 import static com.example.android.mymovie.helper.Utils.MOVIE_DETAILS;
@@ -25,11 +30,27 @@ public class MainActivity extends AppCompatActivity implements OnMovieSelectList
     private android.support.v7.app.ActionBar actionBar;
     public static OnMovieSelectListener movieSelectListener;
     private boolean twoPaneUi = false;
+    AdView adView;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        MobileAds.initialize(this,
+                "ca-app-pub-4793857716357379~5687342425");
+        adView = findViewById(R.id.adView);
+        AdRequest adRequest =new  AdRequest
+                .Builder()
+//                .addTestDevice("A46CBD8340B82CD579D19C018FE04C63")
+                .build();
+        adView.loadAd(adRequest);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-4793857716357379/8525258754");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
 
         movieSelectListener = this;
 
@@ -55,6 +76,14 @@ public class MainActivity extends AppCompatActivity implements OnMovieSelectList
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
+
                 switch (tab.getPosition()) {
                     case 0:
                         if (actionBar != null) actionBar.setTitle(getString(R.string.popular));
