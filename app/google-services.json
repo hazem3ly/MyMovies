@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "925572349687",
+    "firebase_url": "https://mymovies-8039a.firebaseio.com",
+    "project_id": "mymovies-8039a",
+    "storage_bucket": "mymovies-8039a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925572349687:android:98d53122bc44298b941df2",
+        "android_client_info": {
+          "package_name": "com.hazem.mymovie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925572349687-4cj7jefhmi8osmndgiiicj3mag7qv26g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hazem.mymovie",
+            "certificate_hash": "e0a3dba167ac468bda3e557576a71a446be81d7b"
+          }
+        },
+        {
+          "client_id": "925572349687-d7c8idlueb6p9b89n7r73eip2u5lf2cs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1_X2FoBK1zojKg7UzaLm7LQ2QiDtnq_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925572349687-d7c8idlueb6p9b89n7r73eip2u5lf2cs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
